@@ -37,7 +37,7 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .serif{font-family:'Fraunces',Georgia,serif}
 
 /* ================= SIDEBAR ================= */
-.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar-w);background:linear-gradient(185deg,#2a1832 0%,#1c1a20 55%,#17151a 100%);color:#d8cfdd;display:flex;flex-direction:column;z-index:40;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar-w);background:linear-gradient(185deg,var(--side-1) 0%,var(--side-2) 55%,var(--side-3) 100%);color:#d8cfdd;display:flex;flex-direction:column;z-index:40;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .sidebar::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 260px at -10% -5%,rgba(226,85,127,.22),transparent 60%),radial-gradient(400px 300px at 120% 105%,rgba(15,159,120,.14),transparent 60%);pointer-events:none}
 .brand{position:relative;display:flex;align-items:center;gap:12px;padding:22px 20px 18px}
 .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--rose),var(--plum));display:grid;place-items:center;box-shadow:0 6px 18px -4px rgba(226,85,127,.55)}
@@ -55,7 +55,7 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .nav-btn{width:100%;display:flex;align-items:center;gap:12px;background:none;border:0;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:#cfc5d5;text-align:left;transition:background .15s,color .15s}
 .nav-btn > span:first-of-type{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-btn:hover{background:rgba(255,255,255,.06);color:#fff}
-.nav-btn.active{background:linear-gradient(90deg,rgba(226,85,127,.95),rgba(160,55,120,.9));color:#fff;box-shadow:0 6px 16px -6px rgba(226,85,127,.6)}
+.nav-btn.active{background:linear-gradient(90deg,var(--rose),var(--rose-deep));color:var(--on-accent,#fff);box-shadow:0 6px 16px -6px color-mix(in srgb,var(--rose) 60%,transparent)}
 .nav-btn .badge{margin-left:auto;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.12);padding:2px 7px;border-radius:20px}
 .nav-btn.active .badge{background:rgba(255,255,255,.25)}
 .nav-btn .soon{margin-left:auto;width:6px;height:6px;border-radius:50%;background:#4a4250}
@@ -100,7 +100,7 @@ button.saved:hover{border-color:var(--border);background:var(--surface)}
 @media (max-width:760px){.sync-modes{grid-template-columns:1fr}}
 .btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;border:1px solid transparent;font-weight:600;font-size:13.5px;white-space:nowrap;transition:transform .15s,box-shadow .15s,background .15s}
 .btn:active{transform:translateY(1px)}
-.btn-primary{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;box-shadow:0 8px 20px -8px rgba(226,85,127,.7)}
+.btn-primary{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:var(--on-accent,#fff);box-shadow:0 8px 20px -8px rgba(226,85,127,.7)}
 .btn-primary:hover{box-shadow:0 10px 26px -8px rgba(226,85,127,.85)}
 .btn-ghost{background:var(--surface);border-color:var(--border)}
 .btn-ghost:hover{border-color:var(--rose)}
@@ -110,7 +110,7 @@ button.saved:hover{border-color:var(--border);background:var(--surface)}
 .content{padding:26px 28px 40px;flex:1}
 
 /* ================= HERO ================= */
-.hero{position:relative;overflow:hidden;border-radius:22px;padding:28px 30px;color:#fff;background:linear-gradient(118deg,#2c1636 0%,#5b2a6e 42%,#a43a74 75%,#e2557f 100%);display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center;margin-bottom:22px;box-shadow:0 20px 50px -24px rgba(91,42,110,.7)}
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:28px 30px;color:#fff;background:linear-gradient(118deg,var(--side-1) 0%,var(--plum) 42%,var(--rose-deep) 75%,var(--rose) 100%);display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center;margin-bottom:22px;box-shadow:0 20px 50px -24px color-mix(in srgb,var(--plum) 70%,transparent)}
 .hero::after{content:"";position:absolute;right:-80px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(15,159,120,.35),transparent 65%)}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:18px 18px;mask-image:linear-gradient(90deg,transparent 40%,#000)}
 .hero > *{position:relative;z-index:1}
@@ -939,6 +939,32 @@ tbody tr:hover{background:var(--surface-2)}
 @media (max-width:1100px){.wr-hero{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:860px){.set-grid{grid-template-columns:1fr}.set-nav{position:static;flex-direction:row;overflow-x:auto}.set-nav a{white-space:nowrap}}
 
+/* ================= COLOUR THEMES ================= */
+:root{--side-1:#2a1832;--side-2:#1c1a20;--side-3:#17151a}
+html[data-accent]{--rose-soft:color-mix(in srgb,var(--rose) 13%,#fff);--plum-soft:color-mix(in srgb,var(--plum) 11%,#fff);--bg:color-mix(in srgb,var(--plum) 4%,#f7f7f8);--border:color-mix(in srgb,var(--plum) 9%,#e9e9ec)}
+html[data-accent][data-theme="dark"]{--rose-soft:color-mix(in srgb,var(--rose) 20%,#1c1920);--plum-soft:color-mix(in srgb,var(--plum) 30%,#1c1920);--bg:#131116;--border:#2d2833}
+html[data-accent="plum"]{--plum:#5b2a6e;--plum-deep:#3b1a48;--rose:#e2557f;--rose-deep:#c93a66;--side-1:#2a1832;--side-2:#1c1a20;--side-3:#17151a}
+html[data-accent="emerald"]{--plum:#1f4a40;--plum-deep:#163530;--rose:#0f9f78;--rose-deep:#0b7a5d;--side-1:#13302a;--side-2:#1a1d1c;--side-3:#151716}
+html[data-accent="navy"]{--plum:#1e3a6b;--plum-deep:#142849;--rose:#c9a227;--rose-deep:#a8841a;--side-1:#132447;--side-2:#151a26;--side-3:#11151f}
+html[data-accent="ocean"]{--plum:#12507a;--plum-deep:#0c3a59;--rose:#2f80d8;--rose-deep:#1f66b8;--side-1:#0e3352;--side-2:#151c25;--side-3:#11161d}
+html[data-accent="coral"]{--plum:#8a2e3b;--plum-deep:#64202a;--rose:#f06a4f;--rose-deep:#d24f35;--side-1:#4a1a22;--side-2:#211a1c;--side-3:#1a1517}
+html[data-accent="lavender"]{--plum:#5a4b8a;--plum-deep:#3f3466;--rose:#9b7be0;--rose-deep:#7f5fcc;--side-1:#2e2650;--side-2:#1d1b26;--side-3:#17161f}
+html[data-accent="forest"]{--plum:#2d4a2f;--plum-deep:#1f3521;--rose:#4f9d5b;--rose-deep:#3b8147;--side-1:#1d321f;--side-2:#1a1d1a;--side-3:#151815}
+html[data-accent="sand"]{--plum:#6b4f3a;--plum-deep:#4e3928;--rose:#c27c4a;--rose-deep:#a46335;--side-1:#3b2a1e;--side-2:#211d1a;--side-3:#1a1714}
+html[data-accent="midnight"]{--plum:#26262b;--plum-deep:#111114;--rose:#f5b301;--rose-deep:#d99a00;--on-accent:#111;--side-1:#18181b;--side-2:#111113;--side-3:#0b0b0d}
+html[data-accent="midnight"] .nav-btn.active .badge,html[data-accent="midnight"] .nav-btn.active .new{color:#111;background:rgba(0,0,0,.15)}
+html[data-text="large"] body{zoom:1.12}
+.th-drop{width:300px}
+.th-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.th-sw{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);transition:border-color .15s,transform .15s}
+.th-sw:hover{transform:translateY(-2px)}
+.th-sw.on{border-color:var(--rose);color:var(--text)}
+.th-sw i{width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--a) 0 50%,var(--b) 0 100%);box-shadow:inset 0 0 0 3px rgba(255,255,255,.6),0 2px 6px rgba(0,0,0,.15)}
+.th-row{display:flex;gap:8px;margin-top:6px}
+.th-row button{flex:1;height:34px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:12.5px;font-weight:600;color:var(--muted)}
+.th-row button.on{border-color:var(--rose);color:var(--text);background:var(--rose-soft)}
+.th-lbl{font-size:10.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin:4px 0 8px}
+
 /* ================= RESPONSIVE ================= */
 @media (max-width:1280px){.kpis{grid-template-columns:repeat(2,1fr)}.r-three{grid-template-columns:1fr 1fr}.r-three > :first-child{grid-column:1/-1}}
 @media (max-width:1024px){.r-main{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.saved{display:none}}
@@ -974,6 +1000,10 @@ tbody tr:hover{background:var(--surface-2)}
     <div class="search" id="openSearch"><span data-ic="search"></span><span>Search events, clients, venues…</span><kbd>Ctrl K</kbd></div>
     <div class="top-actions">
       <button class="saved" id="syncPill" data-page="settings" data-sync-jump title="Sync status"><i></i><span>Saved on this device</span></button>
+      <div style="position:relative">
+        <button class="icon-btn" id="paletteBtn" aria-label="Colour theme" title="Colour theme"></button>
+        <div class="dropdown th-drop" id="paletteDrop"></div>
+      </div>
       <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"></button>
       <div style="position:relative">
         <button class="icon-btn" id="bellBtn" aria-label="Notifications"></button>
@@ -1102,7 +1132,7 @@ const hydrateIcons = root => root.querySelectorAll('[data-ic]').forEach(el => { 
    STORAGE + SAMPLE DATA
 ========================================================= */
 var APP_READY = false;
-const LOCAL_ONLY = new Set(['theme','collapsed','evView','pickEvent','sync','syncMeta','syncDirty','syncPushAll','mtime','devId','seeded','seed3','seed4','seed5','seed6','seed7','seed8','seed9','seed10']);
+const LOCAL_ONLY = new Set(['accent','textSize','theme','collapsed','evView','pickEvent','sync','syncMeta','syncDirty','syncPushAll','mtime','devId','seeded','seed3','seed4','seed5','seed6','seed7','seed8','seed9','seed10']);
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('eventora_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){
@@ -5969,7 +5999,8 @@ function renderSettings(){
         ${sec('setPrefs','gear','Preferences','Defaults used across the app', `<div class="form-grid">
             <div class="field"><label for="s_cur">Currency</label><select id="s_cur" name="currency">${CURRENCIES.map(([v,l])=>`<option value="${v}" ${v===st.currency?'selected':''}>${l}</option>`).join('')}</select></div>
             <div class="field"><label for="s_time">Default event start time</label><input id="s_time" name="defaultTime" type="time" value="${st.defaultTime}"></div>
-            <div class="field"><label for="s_theme">Theme</label><select id="s_theme" name="theme"><option value="light" ${document.documentElement.dataset.theme==='light'?'selected':''}>Light</option><option value="dark" ${document.documentElement.dataset.theme==='dark'?'selected':''}>Dark</option></select></div>
+            <div class="field full"><label>Colour theme</label><div id="setThemes"></div></div>
+            <div class="field"><label for="s_theme">Light or dark</label><select id="s_theme" name="theme"><option value="light" ${document.documentElement.dataset.theme==='light'?'selected':''}>Light</option><option value="dark" ${document.documentElement.dataset.theme==='dark'?'selected':''}>Dark</option></select></div>
           </div><p style="font-size:12px;color:var(--muted);margin-top:10px">Changing the currency changes the symbol only. Amounts are not converted.</p>`)}
         ${sec('setInvoice','payments','Invoices','Defaults for new invoices', `<div class="form-grid">
             <div class="field"><label for="s_due">Payment due after (days)</label><input id="s_due" name="dueDays" type="number" min="0" max="90" value="${st.dueDays}"></div>
@@ -6008,6 +6039,7 @@ function renderSettings(){
     if(g('theme') !== document.documentElement.dataset.theme) setTheme(g('theme'));
     applyBrand(); toast('Settings saved'); refresh(); });
   renderSyncSection();
+  document.getElementById('setThemes').innerHTML = themePickerHTML(false);
   const dlName = () => `${(getSettings().company||'eventora').replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-backup-${iso(TODAY)}.json`;
   if(!ON_CLAUDE){ const b = document.getElementById('bkDl'); if(b){ b.style.display = ''; b.onclick = () => { try{ const blob = new Blob([JSON.stringify(buildBackup(), null, 1)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = dlName(); document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Backup file downloaded'); }catch(e){ toast('Download failed. Use Copy backup instead.'); } }; } }
   claude_use('downloads').then(dl => { const b = document.getElementById('bkDl'); if(!dl || !b) return; b.style.display = ''; b.onclick = async () => { try{ await dl.save({filename:`${(getSettings().company||'eventora').replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-backup-${iso(TODAY)}.json`, data:JSON.stringify(buildBackup(), null, 1)}); toast('Backup file saved'); }catch(err){ if(err && err.code!=='declined') toast('The file could not be saved here. Use Copy backup instead.'); } }; });
@@ -6247,6 +6279,28 @@ function renderSyncSection(){
 document.addEventListener('click', e => { if(e.target.closest('[data-sync-jump]')) setTimeout(() => document.getElementById('setSync')?.scrollIntoView({behavior:'smooth', block:'start'}), 150); });
 
 /* =========================================================
+   COLOUR THEMES
+========================================================= */
+const THEMES = [['plum','Plum & Rose','#5b2a6e','#e2557f'],['emerald','Emerald','#1f4a40','#0f9f78'],['navy','Navy & Gold','#1e3a6b','#c9a227'],['ocean','Ocean Blue','#12507a','#2f80d8'],['coral','Sunset Coral','#8a2e3b','#f06a4f'],['lavender','Lavender','#5a4b8a','#9b7be0'],['forest','Forest','#2d4a2f','#4f9d5b'],['sand','Desert Sand','#6b4f3a','#c27c4a'],['midnight','Midnight','#18181b','#f5b301']];
+function themePickerHTML(compact){
+  const cur = document.documentElement.dataset.accent || 'plum', dark = document.documentElement.dataset.theme==='dark', big = document.documentElement.dataset.text==='large';
+  return `${compact?'<div class="th-lbl">Colour theme</div>':''}<div class="th-grid" ${compact?'':'style="grid-template-columns:repeat(auto-fill,minmax(92px,1fr))"'}>${THEMES.map(([k,n,a,b])=>`<button type="button" class="th-sw ${k===cur?'on':''}" data-accent-set="${k}" title="${n}"><i style="--a:${a};--b:${b}"></i>${n}</button>`).join('')}</div>
+    ${compact?`<div class="th-lbl">Mode</div><div class="th-row"><button type="button" class="${!dark?'on':''}" data-mode-set="light">☀ Light</button><button type="button" class="${dark?'on':''}" data-mode-set="dark">☾ Dark</button></div>`:''}
+    <div class="th-lbl" style="margin-top:12px">Text size</div><div class="th-row"><button type="button" class="${!big?'on':''}" data-text-set="normal">A  Normal</button><button type="button" class="${big?'on':''}" data-text-set="large" style="font-size:14px">A  Large</button></div>`;
+}
+function setAccent(k){ document.documentElement.dataset.accent = k; store.set('accent', k); if(['dashboard','budget','reports','ticketing'].includes(current) || current.startsWith('event:')){ destroyCharts(); refresh(); } renderThemeDrop(); const st = document.getElementById('setThemes'); if(st) st.innerHTML = themePickerHTML(false); }
+function setTextSize(v){ if(v==='large') document.documentElement.dataset.text = 'large'; else delete document.documentElement.dataset.text; store.set('textSize', v); renderThemeDrop(); const st = document.getElementById('setThemes'); if(st) st.innerHTML = themePickerHTML(false); }
+function renderThemeDrop(){ const d = document.getElementById('paletteDrop'); if(d) d.innerHTML = `<h4>Appearance</h4>${themePickerHTML(true)}`; }
+document.addEventListener('click', e => {
+  const pb = e.target.closest('#paletteBtn'), pd = document.getElementById('paletteDrop');
+  if(pb){ renderThemeDrop(); pd.classList.toggle('open'); document.getElementById('bellDrop')?.classList.remove('open'); return; }
+  const a = e.target.closest('[data-accent-set]'); if(a){ setAccent(a.dataset.accentSet); toast(`${THEMES.find(t=>t[0]===a.dataset.accentSet)[1]} theme`); return; }
+  const m = e.target.closest('[data-mode-set]'); if(m){ setTheme(m.dataset.modeSet); renderThemeDrop(); const sel = document.getElementById('s_theme'); if(sel) sel.value = m.dataset.modeSet; return; }
+  const t = e.target.closest('[data-text-set]'); if(t){ setTextSize(t.dataset.textSet); return; }
+  if(pd && !e.target.closest('#paletteDrop')) pd.classList.remove('open');
+});
+
+/* =========================================================
    PLACEHOLDER PAGES
 ========================================================= */
 function renderPlaceholder(key){
@@ -6371,6 +6425,9 @@ document.getElementById('themeBtn').onclick = () => setTheme(document.documentEl
    INIT
 ========================================================= */
 hydrateIcons(document.body);
+document.documentElement.dataset.accent = store.get('accent','plum');
+if(store.get('textSize','normal')==='large') document.documentElement.dataset.text = 'large';
+document.getElementById('paletteBtn').innerHTML = ic('palette');
 applyBrand();
 document.documentElement.dataset.theme = store.get('theme', 'light');
 document.getElementById('themeBtn').innerHTML = ic(document.documentElement.dataset.theme==='dark' ? 'sun' : 'moon');
