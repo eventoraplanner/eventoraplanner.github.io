@@ -990,11 +990,11 @@ html[data-text="large"] body{zoom:1.12}
 @media (max-width:1024px){.r-main{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.saved{display:none}}
 @media (max-width:860px){
   .sidebar{transform:translateX(-100%)} body.nav-open .sidebar{transform:none} body.nav-open .overlay{display:block}
-  .main{margin-left:0} .menu-btn{display:grid} .search span,.search kbd{display:none} .search{flex:0;width:42px;padding:0;justify-content:center;margin:0 0 0 auto}
+  .main{margin-left:0} .menu-btn{display:grid} .search span,.search kbd{display:none} .search{flex:0 0 42px;width:42px;padding:0;justify-content:center;margin:0 0 0 auto} .crumbs{flex:1 1 auto;overflow:hidden} .crumbs .h{overflow:hidden;text-overflow:ellipsis}
   .content{padding:18px} .topbar{padding:12px 18px} .top-actions .btn span{display:none} .top-actions .btn{padding:0 12px}
   .r-three{grid-template-columns:1fr} .dropdown{width:300px}
 }
-@media (max-width:560px){.kpis{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:25px}.crumbs .t{display:none}}
+@media (max-width:560px){.kpis{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:25px}.crumbs .t{display:none}.topbar{gap:8px;padding:10px 12px}}
 </style>
 </head>
 <body>
