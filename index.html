@@ -220,8 +220,8 @@ button.saved:hover{border-color:var(--border);background:var(--surface)}
 .type-list b{margin-left:auto}
 
 /* Table */
-.tbl-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)}
+.tbl-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;max-width:100%;min-width:0}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);max-width:100%;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs>*{flex:none}
 .tabs button{border:0;background:none;padding:7px 12px;border-radius:9px;font-size:12.5px;font-weight:600;color:var(--muted)}
 .tabs button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
 .tabs button span{font-size:11px;opacity:.7;margin-left:4px}
@@ -1004,6 +1004,32 @@ html[data-text="large"] body{zoom:1.12}
   .r-three{grid-template-columns:1fr} .dropdown{width:300px}
 }
 @media (max-width:560px){.kpis{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:25px}.crumbs .t{display:none}.topbar{gap:8px;padding:10px 12px}}
+
+.wl-logo{width:64px;height:64px;border-radius:20px;margin:0 auto;background:linear-gradient(135deg,var(--rose),var(--plum));display:grid;place-items:center;color:#fff;box-shadow:0 12px 26px -10px var(--rose)}
+.wl-logo svg{width:30px;height:30px}
+.wl-opt{width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:16px;margin-bottom:12px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font:inherit;color:inherit;transition:border-color .15s,transform .15s,box-shadow .15s}
+.wl-opt:hover,.wl-opt:focus-visible{border-color:var(--rose);transform:translateY(-1px);box-shadow:0 10px 24px -14px var(--rose);outline:none}
+.wl-ic{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--rose-soft, rgba(217,70,111,.12));color:var(--rose)}
+.wl-ic svg{width:22px;height:22px}
+.wl-tx{flex:1;display:flex;flex-direction:column;gap:3px}
+.wl-tx b{font-size:15.5px}
+.wl-tx small{color:var(--muted);font-size:12.5px;line-height:1.45}
+.wl-go{color:var(--muted)} .wl-go svg{width:18px;height:18px}
+.wl-link{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:6px;background:none;border:0;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer}
+.wl-link svg{width:15px;height:15px} .wl-link u{color:var(--rose);font-weight:600}
+
+@media (max-width:640px){
+  .p-head{flex-wrap:wrap}
+  .p-head>*{min-width:0;max-width:100%}
+  .tbl-tools{width:100%}
+  .tsearch{flex:1 1 160px;min-width:0;max-width:100%}
+  .tsearch input{width:100%;min-width:0}
+  select.sel{max-width:100%}
+  .btn{max-width:100%}
+  #content{overflow-x:clip}
+  #content .row[style*="grid-template-columns"]{grid-template-columns:1fr !important}
+  .mt-card{flex-wrap:wrap}.mt-card .grow{min-width:0;flex:1 1 150px}.mt-card .meta{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
@@ -1172,7 +1198,7 @@ const hydrateIcons = root => root.querySelectorAll('[data-ic]').forEach(el => { 
    STORAGE + SAMPLE DATA
 ========================================================= */
 var APP_READY = false;
-const LOCAL_ONLY = new Set(['devlink','accent','textSize','theme','collapsed','evView','pickEvent','sync','syncMeta','syncDirty','syncPushAll','mtime','devId','seeded','seed3','seed4','seed5','seed6','seed7','seed8','seed9','seed10']);
+const LOCAL_ONLY = new Set(['devlink','accent','textSize','theme','collapsed','evView','pickEvent','sync','syncMeta','syncDirty','syncPushAll','mtime','devId','seeded','seed3','seed4','seed5','seed6','seed7','seed8','seed9','seed10','welcomePending']);
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('eventora_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){
@@ -1219,7 +1245,8 @@ function seed(){
   ];
   store.set('events', events); store.set('tasks', tasks); store.set('seeded', true);
 }
-if(!store.get('seeded', false)) seed();
+const FIRST_RUN = !store.get('seeded', false);
+if(FIRST_RUN){ store.set('welcomePending', true); seed(); }
 
 /* =========================================================
    HELPERS
@@ -6094,11 +6121,14 @@ function renderSettings(){
   document.getElementById('bkPaste').onclick = () => formModal({title:'Restore from pasted text', sub:'Paste the backup text you copied earlier', submit:'Continue', fields:[{name:'txt', label:'Backup text', type:'textarea', required:true, full:true, max:20000000}], onSubmit: data => { setTimeout(()=>restore(data.txt), 50); }});
   document.getElementById('rsDemo').onclick = () => confirmBox('Reload sample data?', 'All your current data will be replaced with the demo events, clients and vendors.', 'Reload sample data', () => { Object.keys(localStorage).filter(k=>k.startsWith('eventora_') && !['eventora_settings','eventora_theme','eventora_sync','eventora_devId'].includes(k)).forEach(k=>localStorage.removeItem(k)); if(SYNC.on) rawSet('syncPushAll', true); toast('Loading sample data…'); setTimeout(()=>location.reload(), 600); });
   document.getElementById('rsWipe').onclick = () => confirmBox('Erase everything?', 'All events, clients, guests, vendors, invoices and other records will be permanently deleted. Type DELETE to confirm.', 'Erase everything', () => {
+    wipeAll();
+    toast('All data erased'); setTimeout(()=>location.reload(), 600); }, 'DELETE');
+}
+function wipeAll(){
     Object.keys(localStorage).filter(k=>k.startsWith('eventora_') && !['eventora_settings','eventora_theme','eventora_sync','eventora_devId'].includes(k)).forEach(k=>localStorage.removeItem(k));
     if(SYNC.on) rawSet('syncPushAll', true);
     ['seeded','seed3','seed4','seed5','seed6','seed7','seed8','seed9','seed10'].forEach(k=>store.set(k,true));
     ['events','tasks','clients','leads','proposals','venues','guests','tables','timeline','vendors','bookings','templates','menu','menuCfg','styling','decor','talent','rentals','inventory','allocations','travel','budgetLines','budgetPlan','invoices','payments','payouts','ticketTypes','promoCodes','ticketSales','campaigns','sponsorPkgs','sponsors','messages','staff','assignments','meetings','docs','risks','permits','safety','emergency','wrapups'].forEach(k=>store.set(k,[]));
-    toast('All data erased'); setTimeout(()=>location.reload(), 600); }, 'DELETE');
 }
 function confirmBox(title, text, okLabel, onOk, typeWord){
   openModal(`<div class="modal-card sm"><div class="m-body" style="padding-top:26px"><div class="confirm-ico t-red">${ic('alert')}</div><h3 class="serif" style="font-size:21px;margin-bottom:6px">${title}</h3><p style="color:var(--muted);font-size:13.5px">${text}</p>${typeWord?`<input id="cbType" class="sel" style="width:100%;margin-top:12px;background-image:none;padding:0 12px" placeholder="Type ${typeWord}" autocomplete="off">`:''}</div>
@@ -6641,7 +6671,26 @@ applyBrand();
 document.documentElement.dataset.theme = store.get('theme', 'light');
 document.getElementById('themeBtn').innerHTML = ic(document.documentElement.dataset.theme==='dark' ? 'sun' : 'moon');
 APP_READY = true;
+
+/* ---------- First open: choose fresh or sample ---------- */
+function showWelcome(){
+  const opt = (id, icon, title, text, tag) => `<button type="button" class="wl-opt" id="${id}"><span class="wl-ic">${ic(icon)}</span><span class="wl-tx"><b>${title}${tag?`<em>${tag}</em>`:''}</b><small>${text}</small></span><span class="wl-go">${ic('chevR')}</span></button>`;
+  openModal(`<div class="modal-card sm wl-card" style="width:min(520px,calc(100vw - 24px))"><div class="m-body" style="padding:28px 26px 22px">
+    <div class="wl-logo">${ic('spark')}</div>
+    <div class="eyebrow" style="color:var(--rose);text-align:center;margin-top:14px">Welcome to Eventora</div>
+    <h3 class="serif" style="font-size:26px;text-align:center;margin:4px 0 6px">How would you like to start?</h3>
+    <p style="color:var(--muted);font-size:13.5px;text-align:center;margin-bottom:18px">You can change your mind later in Settings → Reset.</p>
+    ${opt('wlFresh','plus','Start fresh','An empty planner, ready for your own events, clients and vendors.','')}
+    ${opt('wlSample','wand','Explore with sample data','See the planner filled with demo events first. Erase them whenever you are ready.','')}
+    <button type="button" id="wlLink" class="wl-link">${ic('link')} Already using Eventora on another device? <u>Link devices</u></button>
+  </div></div>`);
+  const done = () => store.set('welcomePending', false);
+  document.getElementById('wlFresh').onclick = () => { wipeAll(); done(); closeModal(); toast('Your planner is ready — add your first event'); setTimeout(()=>location.reload(), 700); };
+  document.getElementById('wlSample').onclick = () => { done(); closeModal(); toast('Sample data loaded. Erase it any time in Settings → Reset'); };
+  document.getElementById('wlLink').onclick = () => { done(); closeModal(); openLinkMenu(); };
+}
 go('dashboard');
+if(store.get('welcomePending', false) && !ON_CLAUDE) setTimeout(showWelcome, 350);
 if(ON_CLAUDE){ if((rawGet('sync',{mode:'off'}).mode||'off')!=='off') startSync(); else setSyncStatus('off'); }
 else { setSyncStatus('off'); startLinkSync(); updateLinkPill(); }
 </script>

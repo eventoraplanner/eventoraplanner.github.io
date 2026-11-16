@@ -1,6 +1,6 @@
 // Eventora offline support: keeps the planner working without internet after the first visit.
 // Planner data lives in the browser's own storage and is never touched here.
-const CACHE = 'eventora-v1';
+const CACHE = 'eventora-v2';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
